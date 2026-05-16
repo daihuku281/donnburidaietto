@@ -3,7 +3,7 @@ import { useState} from 'react'
 function App() {
     const katudonn = 900
 
-    const [text, setText] = useState("カロリー量を入力してください")
+    const text = "カロリー量を入力してください"
     const [kcal, setkal] = useState("")
 
     
