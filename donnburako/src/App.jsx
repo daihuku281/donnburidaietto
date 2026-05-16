@@ -6,9 +6,9 @@ function App() {
         {name: "大福", kcal: 250},
         {name: "大根", kcal:15},
         {name: "どんぐり", kcal:10},
-        {name: "ダチョウ", kcal:140},
-        {name: "ドラゴン", kcal:15},
-        {name: "ダニエル", kcal:2750},
+        {name: "ダチョウの肉", kcal:140},
+        {name: "ドラゴンフルーツ", kcal:15},
+        {name: "ダニエルが育てた謎の野菜", kcal:2750},
 
     ]
     
