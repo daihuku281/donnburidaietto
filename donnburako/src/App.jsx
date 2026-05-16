@@ -1,32 +1,54 @@
 import { useState} from 'react'
 
 function App() {
-    const katudonn = 900
+    const foods = [
+        {name: "カツ丼", kcal: 900},
+        {name: "大福", kcal: 250},
+        {name: "大根", kcal:15},
+        {name: "どんぐり", kcal:10},
+        {name: "ダチョウ", kcal:140},
+        {name: "ドラゴン", kcal:15},
+        {name: "ダニエル", kcal:2750},
 
-    const [text, setText] = useState("カロリー量を入力してください")
-    const [kcal, setkal] = useState("")
-
+    ]
     
-
+    const [kcal, setkal] = useState("")
+    const [randomFood, setRandomFood] = useState(foods[0])
+    const changeFood = () =>{
+        const randomIndex = Math.floor(Math.random() * foods.length)
+        setRandomFood(foods[randomIndex])
+    }
+    
     return(
         <>
-        <h1>
-            {text}
-        </h1>
+        <h1>カロリー量を入力してください</h1>
 
         <input
-            type="number"
-            placeholder="カロリーを入力してください"
-            value={kcal}
-            onChange={(e) => setkal(e.target.value)}
-            
-            />
-            <p>入力されたカロリーはカツ丼 
-                {kcal ===""?0:(Number(kcal) / katudonn).toFixed(2)}個です
-                </p>
-                <br/>
-                
+        type="number"
+        min="1"
+        placeholder="カロリーを入力してください"
+        value={kcal}
+        onChange={(e) => setkal(e.target.value)}
+        />
+        <button onClick={changeFood}>
+            食べ物を変更
+        </button>
+        
+            <p>
+                入力されたカロリーは
+                {randomFood.name}
 
+                {
+                    kcal === ""
+                        ? 0
+                        : (
+                            Number(kcal) / randomFood.kcal
+                        ).toFixed(2)
+                }
+
+                {randomFood.unit}(杯、個)です
+            </p>
+            {}
         </>
     )
 }
