@@ -1,37 +1,54 @@
 import { useState } from 'react'
-import TitlePage from './TitlePage'
 
 function App() {
-    const katudonn = 900
-    const text = "カロリー量を入力してください"
-    const [page, setPage] = useState('home')
-    const [kcal, setkal] = useState("")
+    const foods = [
+        {name: "カツ丼", kcal: 900},
+        {name: "大福", kcal: 250},
+        {name: "大根", kcal:15},
+        {name: "どんぐり", kcal:10},
+        {name: "ダチョウの肉", kcal:140},
+        {name: "ドラゴンフルーツ", kcal:15},
+        {name: "ダニエルが育てた謎の野菜", kcal:2750},
 
+    ]
+    
+    const [kcal, setkal] = useState("")
+    const [randomFood, setRandomFood] = useState(foods[0])
+    const changeFood = () =>{
+        const randomIndex = Math.floor(Math.random() * foods.length)
+        setRandomFood(foods[randomIndex])
+    }
+    
     return(
         <>
-        <nav style={{ padding: '1rem', display: 'flex', gap: '1rem' }}>
-            <button type="button" onClick={() => setPage('home')}>
-                アプリ画面
-            </button>
-            <button type="button" onClick={() => setPage('title')}>
-                タイトルページ
-            </button>
-        </nav>
+        <h1>カロリー量を入力してください</h1>
 
-        {page === 'title' ? (
-            <TitlePage />
-        ) : (
-            <>
-                <h1>{text}</h1>
-                <input
-                    type="number"
-                    placeholder="カロリーを入力してください"
-                    value={kcal}
-                    onChange={(e) => setkal(e.target.value)}
-                />
-                <p>入力されたカロリーはカツ丼 {kcal === "" ? 0 : (Number(kcal) / katudonn).toFixed(2)} 個です</p>
-            </>
-        )}
+        <input
+        type="number"
+        min="1"
+        placeholder="カロリーを入力してください"
+        value={kcal}
+        onChange={(e) => setkal(e.target.value)}
+        />
+        <button onClick={changeFood}>
+            食べ物を変更
+        </button>
+        
+            <p>
+                入力されたカロリーは
+                {randomFood.name}
+
+                {
+                    kcal === ""
+                        ? 0
+                        : (
+                            Number(kcal) / randomFood.kcal
+                        ).toFixed(2)
+                }
+
+                {randomFood.unit}(杯、個)です
+            </p>
+            {}
         </>
     )
 }
