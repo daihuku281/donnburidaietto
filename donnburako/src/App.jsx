@@ -39,11 +39,7 @@ function App() {
                 {randomFood.name}
 
                 {
-                    kcal === ""
-                        ? 0
-                        : (
-                            Number(kcal) / randomFood.kcal
-                        ).toFixed(2)
+                    kcal === "" ? 0: (Number(kcal) / randomFood.kcal).toFixed(2)
                 }
 
                 {randomFood.unit}(杯、個)です
