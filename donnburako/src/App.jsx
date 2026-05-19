@@ -1,27 +1,37 @@
-import { useState} from 'react'
+import { useState } from 'react'
+import TitlePage from './TitlePage'
 
 function App() {
     const foods = [
-        {name: "カツ丼", kcal: 900},
-        {name: "大福", kcal: 250},
-        {name: "大根", kcal:15},
-        {name: "どんぐり", kcal:10},
-        {name: "ダチョウの肉", kcal:140},
-        {name: "ドラゴンフルーツ", kcal:15},
-        {name: "ダニエルが育てた謎の野菜", kcal:2750},
+        {name: "カツ丼", kcal: 900, unit: '杯'},
+        {name: "大福", kcal: 250, unit: '個'},
+        {name: "大根", kcal:15, unit: '本'},
+        {name: "どんぐり", kcal:10, unit: '個'},
+        {name: "ダチョウの肉", kcal:140, unit: '枚'},
+        {name: "ドラゴンフルーツ", kcal:15, unit: '個'},
+        {name: "ダニエルが育てた謎の野菜", kcal:2750, unit: '束'},
 
     ]
     
     const [kcal, setkal] = useState("")
     const [randomFood, setRandomFood] = useState(foods[0])
+    const [showTitlePage, setShowTitlePage] = useState(false)
     const changeFood = () =>{
         const randomIndex = Math.floor(Math.random() * foods.length)
         setRandomFood(foods[randomIndex])
     }
     
+    if (showTitlePage) {
+        return <TitlePage onBack={() => setShowTitlePage(false)} />
+    }
+
     return(
         <>
         <h1>カロリー量を入力してください</h1>
+
+        <button onClick={() => setShowTitlePage(true)}>
+            タイトルページへ
+        </button>
 
         <input
         type="number"
@@ -39,12 +49,13 @@ function App() {
                 {randomFood.name}
 
                 {
-                    kcal === ""? 0: (Number(kcal) / randomFood.kcal).toFixed(2)
+
+                    kcal === "" ? 0: (Number(kcal) / randomFood.kcal).toFixed(2)
+                    
                 }
 
-                {randomFood.unit}(杯、個)です
+                {randomFood.unit}です
             </p>
-            {}
         </>
     )
 }
