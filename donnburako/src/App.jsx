@@ -50,8 +50,8 @@ function App() {
     
     const [kcal, setKcal] = useState('')
     const [randomFood, setRandomFood] = useState(foods[0])
-    const [showTitlePage, setShowTitlePage] = useState(false)
-    const changeFood = () => {
+    const [showTitlePage, setShowTitlePage] = useState(true)
+    const changeFood = () =>{
         const randomIndex = Math.floor(Math.random() * foods.length)
         setRandomFood(foods[randomIndex])
     }
