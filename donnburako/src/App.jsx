@@ -44,7 +44,7 @@ function App() {
             name: 'ダニエルが育てた謎の野菜',
             kcal: 2750,
             unit: '束',
-            image: 'https://www.figma.com/board/pQkBWtgoEMbr8Km2DXZraU/FigJam%E3%81%B8%E3%82%88%E3%81%86%E3%81%93%E3%81%9D?node-id=67-244&t=DoLGWGmsSSjEj9H8-4',
+            image: '/images/スクリーンショット 2026-05-23 021419.png',
         },
     ]
     
