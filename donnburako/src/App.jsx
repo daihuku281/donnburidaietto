@@ -48,21 +48,23 @@ function App() {
         },
     ]
     
-    // 【変更点1】入力欄の文字をリアルタイムに保持する状態を新しく追加
     const [inputValue, setInputValue] = useState('')
-    // 計算確定用のカロリー状態
     const [kcal, setKcal] = useState('')
     const [randomFood, setRandomFood] = useState(foods[0])
     const [showTitlePage, setShowTitlePage] = useState(true)
+    
+    // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
+    const [animationKey, setAnimationKey] = useState(0)
 
     const changeFood = () => {
         const randomIndex = Math.floor(Math.random() * foods.length)
         setRandomFood(foods[randomIndex])
+        setKcal('') // 食べ物を変えたら一旦クリア
     }
 
-    // 【変更点2】確定ボタンが押された時に、入力された数値を計算用の状態にセットする関数
     const handleCalculate = () => {
         setKcal(inputValue)
+        setAnimationKey(prev => prev + 1) // 数値が変わらなくてもここが増えればアニメーションが再発火する
     }
     
     const amount = kcal === '' ? 0 : Number(kcal) / randomFood.kcal
@@ -82,7 +84,6 @@ function App() {
                 タイトルページへ
             </button>
 
-            {/* 【変更点3】valueをinputValueに、onChangeでsetInputValueを呼ぶように変更 */}
             <input
                 type="number"
                 min="1"
@@ -91,7 +92,6 @@ function App() {
                 onChange={(e) => setInputValue(e.target.value)}
             />
 
-            {/* 【変更点4】計算を実行（表示を更新）するための確定ボタンを追加 */}
             <button onClick={handleCalculate}>
                 計算する
             </button>
@@ -106,17 +106,26 @@ function App() {
             </p>
 
             {unitCount > 0 && (
-                <div className="food-image-list">
+                /* ここに animationKey を渡すことで、計算ボタンを押すたびに中の要素ごと初期化・再描画されて確実に降ってきます */
+                <div className="food-image-list" key={animationKey}>
                     {Array.from({ length: visibleCount }, (_, index) => (
                         <img
                             key={index}
                             src={randomFood.image}
                             alt={`${randomFood.name} ${index + 1}`}
                             className="food-image"
+                            /* 【重要】1枚ごとにdelay（時間差）を0.08秒ずつずらして、ポロポロと降らせる */
+                            style={{ animationDelay: `${index * 0.08}s` }}
                         />
                     ))}
                     {moreCount > 0 && (
-                        <div className="more-count">+{moreCount} つ</div>
+                        <div 
+                            className="more-count"
+                            /* 画像が全部落ちきったあとに最後の文字を落とす指定 */
+                            style={{ animationDelay: `${visibleCount * 0.08}s` }}
+                        >
+                            +{moreCount} つ
+                        </div>
                     )}
                 </div>
             )}
