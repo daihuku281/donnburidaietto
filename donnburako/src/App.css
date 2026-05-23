@@ -1,3 +1,40 @@
+.title-page {
+  padding: 2rem;
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9999, #ffcc88, #ffff88, #99dd99, #88dddd, #8888ee, #dd88dd, #ff9999);
+  background-size: 400% 400%;
+  animation: rainbowMove 6s ease infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  font-weight: 700;
+}
+
+.title-page button {
+  background-color: #87ceeb;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.title-page button:hover {
+  transform: scale(1.1) translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.title-page button:active {
+  transform: scale(0.97) translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes rainbowMove {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -183,19 +220,89 @@
   }
 }
 
+/* --- 既存の .app-container を以下に置き換えてください --- */
+
 .app-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   align-items: flex-start;
-  padding: 1rem;
+  padding: 2rem; /* 少し余白を広げてゆったりさせました */
+  min-height: 100vh; /* 画面全体に虹色を広げる設定 */
+  box-sizing: border-box;
+
+  /* 🌈 虹色のグラデーション設定 */
+  background: linear-gradient(
+    45deg,
+    #ff7675, /* 赤 */
+    #ffeaa7, /* 黄 */
+    #55efc4, /* 緑 */
+    #81ecec, /* 青 */
+    #74b9ff, /* 藍 */
+    #a29bfe, /* 紫 */
+    #ff7675  /* ループを滑らかにするための赤 */
+  );
+  background-size: 400% 400%;
+  animation: rainbowAnimation 15s ease infinite; /* 15秒かけて滑らかに動く */
 }
+
+/* 虹色を動かすためのアニメーション */
+@keyframes rainbowAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 💡 虹色背景でも文字がはっきり読めるようにする調整 */
+.app-container h1,
+.app-container p {
+  color: #2d3436; /* 濃いグレーの文字 */
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); /* 白い影をつけて文字を浮き立たせる */
+  font-weight: bold;
+}
+
+/* ボタンや入力フォームをポップで今風のデザインに */
+.app-container input[type="number"],
+.app-container button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 20px; /* 丸みを持たせる */
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 軽い影をつける */
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+/* 入力フォームの背景を白にして見やすく */
+.app-container input[type="number"] {
+  background-color: rgba(255, 255, 255, 0.9);
+  outline: none;
+  width: 250px;
+}
+
+/* ボタンにマウスを乗せたとき・押したときのちょっとしたエフェクト */
+.app-container button {
+  background-color: #ffffff;
+  color: #333;
+  font-weight: bold;
+}
+.app-container button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-1px); /* ほんの少し浮く */
+}
+.app-container button:active {
+  transform: translateY(1px); /* 押した感を出す */
+}
+
+/* --- ここから下の food-image-list などの既存コードはそのままで大丈夫です --- */
 
 .food-image-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.75rem;
+  overflow: hidden; 
+  padding: 10px 0;
 }
 
 .food-image {
@@ -204,6 +311,60 @@
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid #ccc;
+  opacity: 0;
+  animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.more-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.8); /* 虹色に映えるよう、少し白の半透明に変更しました */
+  border: 1px dashed #999;
+  border-radius: 8px;
+  color: #333;
+  font-size: 0.9rem;
+  opacity: 0;
+  animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes dropFall {
+  0% {
+    transform: translateY(-150px) scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(10px) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+/* --- 変更・追加したスタイル --- */
+
+.food-image-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  overflow: hidden; /* 上から降ってくる際、コンテナ外から綺麗に出現させるため */
+  padding: 10px 0;
+}
+
+.food-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+
+  /* アニメーションの初期設定（最初は透明） */
+  opacity: 0;
+  animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 .more-count {
@@ -217,4 +378,25 @@
   border-radius: 8px;
   color: #333;
   font-size: 0.9rem;
+
+  /* テキストの枠も画像と一緒に落とすためのアニメーション設定 */
+  opacity: 0;
+  animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 新しく追加：上からバウンドしながら落ちてくるキーフレーム 
+*/
+@keyframes dropFall {
+  0% {
+    transform: translateY(-150px) scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(10px) scale(1.05); /* 少し行き過ぎてから戻る（バウンド感） */
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
