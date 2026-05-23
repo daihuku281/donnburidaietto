@@ -1,3 +1,24 @@
+.title-page {
+  padding: 2rem;
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9999, #ffcc88, #ffff88, #99dd99, #88dddd, #8888ee, #dd88dd, #ff9999);
+  background-size: 400% 400%;
+  animation: rainbowMove 6s ease infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  font-weight: 700;
+}
+
+@keyframes rainbowMove {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
