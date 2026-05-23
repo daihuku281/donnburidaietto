@@ -21,7 +21,9 @@ function App() {
             name: '大根',
             kcal: 15,
             unit: '本',
+
             image: '/images/daikonn(1).png',
+
         },
         {
             name: 'どんぐり',
@@ -58,7 +60,6 @@ function App() {
     const [showWeightPage, setShowWeightPage] = useState(false)
     const [showBurnInput, setShowBurnInput] = useState(false)
     const [burnKcal, setBurnKcal] = useState('')
-        // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
 
     const changeFood = () => {
         const randomIndex = Math.floor(Math.random() * foods.length)
@@ -139,7 +140,7 @@ function App() {
                     {Array.from({ length: visibleCount }, (_, index) => (
                         <img
                             key={index}
-                            src={randomFood.image}
+                            src={encodeURI(randomFood.image)}
                             alt={`${randomFood.name} ${index + 1}`}
                             className="food-image"
                             /* 【重要】1枚ごとにdelay（時間差）を0.08秒ずつずらして、ポロポロと降らせる */
