@@ -11,7 +11,7 @@ function TitlePage({ onBack }) {
       alignItems: 'center',
     }}>
       <h1>カロリー計算アプリへようこそ</h1>
-      <p>入力したカロリーから、どんぶり変換します。</p>
+      <p style={{ color: 'black' }}>入力したカロリーから、どんぶり変換します。</p>
       <button onClick={onBack} style={{ marginTop: '1rem' }}>
         ダイエットに行く！！！！
       </button>
