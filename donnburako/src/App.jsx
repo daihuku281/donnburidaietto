@@ -21,7 +21,9 @@ function App() {
             name: '大根',
             kcal: 15,
             unit: '本',
-            image: '/images/daikonn (1).png',
+
+            image: '/images/daikonn(1).png',
+
         },
         {
             name: 'どんぐり',
