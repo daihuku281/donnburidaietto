@@ -190,12 +190,15 @@
   align-items: flex-start;
   padding: 1rem;
 }
+/* --- 変更・追加したスタイル --- */
 
 .food-image-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.75rem;
+  overflow: hidden; /* 上から降ってくる際、コンテナ外から綺麗に出現させるため */
+  padding: 10px 0;
 }
 
 .food-image {
@@ -204,6 +207,10 @@
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid #ccc;
+
+  /* アニメーションの初期設定（最初は透明） */
+  opacity: 0;
+  animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 .more-count {
@@ -217,4 +224,25 @@
   border-radius: 8px;
   color: #333;
   font-size: 0.9rem;
+
+  /* テキストの枠も画像と一緒に落とすためのアニメーション設定 */
+  opacity: 0;
+  animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 新しく追加：上からバウンドしながら落ちてくるキーフレーム 
+*/
+@keyframes dropFall {
+  0% {
+    transform: translateY(-150px) scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(10px) scale(1.05); /* 少し行き過ぎてから戻る（バウンド感） */
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }

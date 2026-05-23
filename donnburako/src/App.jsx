@@ -38,7 +38,7 @@ function App() {
             name: 'ドラゴンフルーツ',
             kcal: 15,
             unit: '個',
-        image: 'https://msp.c.yimg.jp/images/v2/FUTi93tXq405grZVGgDqG5Bn3DxYLYALg8Tg4zrToQ7LwaoYx72hI_QPi-3zSfy2ZrGECGyHEWu7J5AQW-kAHwEwZ0BXVoYW-1B6WfVSFLX7Ap33Gha8JNttI1VqQjZT8yFD8f4htttvG_i7s5UaHjIxyGn78OBewLYkxPOISC3PJQVfe0n_YVs5FK58NEAWoXAtSgGV-lyT6U6aV2P_xgz9APU_6jtg-AVSN-fy47GGdaZe5tO-t73x4SIr5VCCi5eKV7gFFa2schHKPpkoQdOYF_8Y11cliWfkB7NfLuBhTio9PYFI6KkFFPBdODbEccwL06VAu_VrzQerN9vxCQ==/dragonfruit-fruits-isolated-transparent-background_191095-14619.jpg',
+            image: 'https://msp.c.yimg.jp/images/v2/FUTi93tXq405grZVGgDqG5Bn3DxYLYALg8Tg4zrToQ7LwaoYx72hI_QPi-3zSfy2ZrGECGyHEWu7J5AQW-kAHwEwZ0BXVoYW-1B6WfVSFLX7Ap33Gha8JNttI1VqQjZT8yFD8f4htttvG_i7s5UaHjIxyGn78OBewLYkxPOISC3PJQVfe0n_YVs5FK58NEAWoXAtSgGV-lyT6U6aV2P_xgz9APU_6jtg-AVSN-fy47GGdaZe5tO-t73x4SIr5VCCi5eKV7gFFa2schHKPpkoQdOYF_8Y11cliWfkB7NfLuBhTio9PYFI6KkFFPBdODbEccwL06VAu_VrzQerN9vxCQ==/dragonfruit-fruits-isolated-transparent-background_191095-14619.jpg',
         },
         {
             name: 'ダニエルが育てた謎の野菜',
@@ -48,12 +48,23 @@ function App() {
         },
     ]
     
+    const [inputValue, setInputValue] = useState('')
     const [kcal, setKcal] = useState('')
     const [randomFood, setRandomFood] = useState(foods[0])
     const [showTitlePage, setShowTitlePage] = useState(true)
-    const changeFood = () =>{
+    
+    // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
+    const [animationKey, setAnimationKey] = useState(0)
+
+    const changeFood = () => {
         const randomIndex = Math.floor(Math.random() * foods.length)
         setRandomFood(foods[randomIndex])
+        setKcal('') // 食べ物を変えたら一旦クリア
+    }
+
+    const handleCalculate = () => {
+        setKcal(inputValue)
+        setAnimationKey(prev => prev + 1) // 数値が変わらなくてもここが増えればアニメーションが再発火する
     }
     
     const amount = kcal === '' ? 0 : Number(kcal) / randomFood.kcal
@@ -77,9 +88,16 @@ function App() {
                 type="number"
                 min="1"
                 placeholder="カロリーを入力してください"
-                value={kcal}
-                onChange={(e) => setKcal(e.target.value)}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
             />
+
+            <button onClick={handleCalculate}>
+                計算する
+            </button>
+
+
+            
             <button onClick={changeFood}>
                 食べ物を変更
             </button>
@@ -90,17 +108,26 @@ function App() {
             </p>
 
             {unitCount > 0 && (
-                <div className="food-image-list">
+                /* ここに animationKey を渡すことで、計算ボタンを押すたびに中の要素ごと初期化・再描画されて確実に降ってきます */
+                <div className="food-image-list" key={animationKey}>
                     {Array.from({ length: visibleCount }, (_, index) => (
                         <img
                             key={index}
                             src={randomFood.image}
                             alt={`${randomFood.name} ${index + 1}`}
                             className="food-image"
+                            /* 【重要】1枚ごとにdelay（時間差）を0.08秒ずつずらして、ポロポロと降らせる */
+                            style={{ animationDelay: `${index * 0.08}s` }}
                         />
                     ))}
                     {moreCount > 0 && (
-                        <div className="more-count">+{moreCount} つ</div>
+                        <div 
+                            className="more-count"
+                            /* 画像が全部落ちきったあとに最後の文字を落とす指定 */
+                            style={{ animationDelay: `${visibleCount * 0.08}s` }}
+                        >
+                            +{moreCount} つ
+                        </div>
                     )}
                 </div>
             )}
