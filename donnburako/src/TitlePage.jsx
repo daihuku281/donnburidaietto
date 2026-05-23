@@ -4,7 +4,7 @@ function TitlePage({ onBack }) {
       padding: '2rem',
       textAlign: 'center',
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, red, orange, yellow, green, cyan, blue, violet)',
+      background: 'linear-gradient(135deg, #ff9999, #ffcc88, #ffff88, #99dd99, #88dddd, #8888ee, #dd88dd)',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
