@@ -53,7 +53,6 @@ function App() {
     const [kcal, setKcal] = useState('')
     const [randomFood, setRandomFood] = useState(foods[0])
     const [showTitlePage, setShowTitlePage] = useState(true)
-    
     // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
     const [animationKey, setAnimationKey] = useState(0)
     const [showWeightPage, setShowWeightPage] = useState(false)
