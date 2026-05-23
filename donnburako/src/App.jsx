@@ -126,4 +126,4 @@ function App() {
     )
 }
 
-export default Acpp
+export default App
