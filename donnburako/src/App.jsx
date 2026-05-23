@@ -56,6 +56,8 @@ function App() {
     // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
     const [animationKey, setAnimationKey] = useState(0)
     const [showWeightPage, setShowWeightPage] = useState(false)
+    const [showBurnInput, setShowBurnInput] = useState(false)
+    const [burnKcal, setBurnKcal] = useState('')
         // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
 
     const changeFood = () => {
@@ -65,8 +67,9 @@ function App() {
     }
 
     const handleCalculate = () => {
-        setKcal(inputValue)
-        setAnimationKey(prev => prev + 1) // 数値が変わらなくてもここが増えればアニメーションが再発火する
+        const net = Math.max(0, Number(inputValue) - Number(burnKcal || 0))
+        setKcal(String(net))
+        setAnimationKey(prev => prev + 1)
     }
     
     const amount = kcal === '' ? 0 : Number(kcal) / randomFood.kcal
@@ -98,9 +101,25 @@ function App() {
                 onChange={(e) => setInputValue(e.target.value)}
             />
 
-            <button onClick={handleCalculate}>
-                計算する
-            </button>
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <button onClick={handleCalculate}>
+                    計算する
+                </button>
+                {kcal !== '' && !showBurnInput && (
+                    <button onClick={() => setShowBurnInput(true)}>
+                        消費カロリーを入力
+                    </button>
+                )}
+                {showBurnInput && (
+                    <input
+                        type="number"
+                        min="1"
+                        placeholder="消費カロリー"
+                        value={burnKcal}
+                        onChange={(e) => setBurnKcal(e.target.value)}
+                    />
+                )}
+            </div>
 
             <button onClick={() => setShowWeightPage(true)}>
                 体重の入力
