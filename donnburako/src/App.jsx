@@ -38,7 +38,7 @@ function App() {
             name: 'ドラゴンフルーツ',
             kcal: 15,
             unit: '個',
-        image: 'https://msp.c.yimg.jp/images/v2/FUTi93tXq405grZVGgDqG5Bn3DxYLYALg8Tg4zrToQ7LwaoYx72hI_QPi-3zSfy2ZrGECGyHEWu7J5AQW-kAHwEwZ0BXVoYW-1B6WfVSFLX7Ap33Gha8JNttI1VqQjZT8yFD8f4htttvG_i7s5UaHjIxyGn78OBewLYkxPOISC3PJQVfe0n_YVs5FK58NEAWoXAtSgGV-lyT6U6aV2P_xgz9APU_6jtg-AVSN-fy47GGdaZe5tO-t73x4SIr5VCCi5eKV7gFFa2schHKPpkoQdOYF_8Y11cliWfkB7NfLuBhTio9PYFI6KkFFPBdODbEccwL06VAu_VrzQerN9vxCQ==/dragonfruit-fruits-isolated-transparent-background_191095-14619.jpg',
+            image: 'https://msp.c.yimg.jp/images/v2/FUTi93tXq405grZVGgDqG5Bn3DxYLYALg8Tg4zrToQ7LwaoYx72hI_QPi-3zSfy2ZrGECGyHEWu7J5AQW-kAHwEwZ0BXVoYW-1B6WfVSFLX7Ap33Gha8JNttI1VqQjZT8yFD8f4htttvG_i7s5UaHjIxyGn78OBewLYkxPOISC3PJQVfe0n_YVs5FK58NEAWoXAtSgGV-lyT6U6aV2P_xgz9APU_6jtg-AVSN-fy47GGdaZe5tO-t73x4SIr5VCCi5eKV7gFFa2schHKPpkoQdOYF_8Y11cliWfkB7NfLuBhTio9PYFI6KkFFPBdODbEccwL06VAu_VrzQerN9vxCQ==/dragonfruit-fruits-isolated-transparent-background_191095-14619.jpg',
         },
         {
             name: 'ダニエルが育てた謎の野菜',
@@ -48,12 +48,21 @@ function App() {
         },
     ]
     
+    // 【変更点1】入力欄の文字をリアルタイムに保持する状態を新しく追加
+    const [inputValue, setInputValue] = useState('')
+    // 計算確定用のカロリー状態
     const [kcal, setKcal] = useState('')
     const [randomFood, setRandomFood] = useState(foods[0])
     const [showTitlePage, setShowTitlePage] = useState(true)
-    const changeFood = () =>{
+
+    const changeFood = () => {
         const randomIndex = Math.floor(Math.random() * foods.length)
         setRandomFood(foods[randomIndex])
+    }
+
+    // 【変更点2】確定ボタンが押された時に、入力された数値を計算用の状態にセットする関数
+    const handleCalculate = () => {
+        setKcal(inputValue)
     }
     
     const amount = kcal === '' ? 0 : Number(kcal) / randomFood.kcal
@@ -73,13 +82,20 @@ function App() {
                 タイトルページへ
             </button>
 
+            {/* 【変更点3】valueをinputValueに、onChangeでsetInputValueを呼ぶように変更 */}
             <input
                 type="number"
                 min="1"
                 placeholder="カロリーを入力してください"
-                value={kcal}
-                onChange={(e) => setKcal(e.target.value)}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
             />
+
+            {/* 【変更点4】計算を実行（表示を更新）するための確定ボタンを追加 */}
+            <button onClick={handleCalculate}>
+                計算する
+            </button>
+
             <button onClick={changeFood}>
                 食べ物を変更
             </button>
