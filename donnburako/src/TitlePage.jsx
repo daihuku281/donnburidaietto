@@ -1,18 +1,11 @@
+import './App.css'
+
 function TitlePage({ onBack }) {
   return (
-    <section style={{
-      padding: '2rem',
-      textAlign: 'center',
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, red, orange, yellow, green, cyan, blue, violet)',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}>
+    <section className="title-page">
       <h1>カロリー計算アプリへようこそ</h1>
-      <p>入力したカロリーから、どんぶり変換します。</p>
-      <button onClick={onBack} style={{ marginTop: '1rem' }}>
+      <p style={{ color: 'black' }}>入力したカロリーから、どんぶり変換します。</p>
+      <button onClick={onBack} style={{ marginTop: '1rem', padding: '1rem 2.5rem', fontSize: '1.2rem', borderRadius: '2rem' }}>
         ダイエットに行く！！！！
       </button>
     </section>
