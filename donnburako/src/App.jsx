@@ -58,7 +58,10 @@ function App() {
     const [showWeightPage, setShowWeightPage] = useState(false)
     const [showBurnInput, setShowBurnInput] = useState(false)
     const [burnKcal, setBurnKcal] = useState('')
+<<<<<<< HEAD
         // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
+=======
+>>>>>>> a6579ce52a0348210a7f8ca12c12e2c68e289929
 
     const changeFood = () => {
         const randomIndex = Math.floor(Math.random() * foods.length)
