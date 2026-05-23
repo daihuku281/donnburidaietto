@@ -9,37 +9,37 @@ function App() {
             name: 'カツ丼',
             kcal: 900,
             unit: '杯',
-            image: '',
+            image: '/images/11f24f5820d0739c31575ef5f36f83e9.png',
         },
         {
             name: '大福',
             kcal: 250,
             unit: '個',
-            image: 'donnburidaietto/donnburako/public/images/Daifuku_1.png',
+            image: '/images/Daifuku_1.png',
         },
         {
             name: '大根',
             kcal: 15,
             unit: '本',
-            image: 'donnburidaietto/donnburako/public/images/daikonn (1).png',
+            image: '/images/daikonn (1).png',
         },
         {
             name: 'どんぐり',
             kcal: 10,
             unit: '個',
-            image: 'donnburidaietto/donnburako/public/images/large.png',
+            image: '/images/large.png',
         },
         {
             name: 'ダチョウの肉',
             kcal: 140,
             unit: '枚',
-            image: 'donnburidaietto/donnburako/public/images/dachou.png',
+            image: '/images/dachou.png',
         },
         {
             name: 'ドラゴンフルーツ',
             kcal: 15,
             unit: '個',
-            image: 'donnburidaietto/donnburako/public/images/image80.png',
+            image: '/images/image80.png',
         },
         {
             name: 'ダニエルが育てた謎の野菜',
@@ -121,7 +121,7 @@ function App() {
                     {Array.from({ length: visibleCount }, (_, index) => (
                         <img
                             key={index}
-                            src={randomFood.image}
+                            src={encodeURI(randomFood.image)}
                             alt={`${randomFood.name} ${index + 1}`}
                             className="food-image"
                             /* 【重要】1枚ごとにdelay（時間差）を0.08秒ずつずらして、ポロポロと降らせる */
