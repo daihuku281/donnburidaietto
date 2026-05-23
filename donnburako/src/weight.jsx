@@ -18,7 +18,7 @@ function WeightPage({ onBack }) {
         { name: 'ドラえもん', weight: 129, image: '/images/7z2QwBPGvjDXNpuj9GeAwRr0PiWI3dcAr9MEBIJJHTL964YEso0yjlCn96FxFobwS38r4opAhPFYm5hw_main.jpg' },
         { name: 'デビル化カズヤ', weight: 113, image: '/images/kazuya.jpg' },
         { name: 'DIO', weight: 90, image: '/images/chara_img_sp.png' },
-        { name: '辞書100冊', weight: 30, image: '/images/dictionary.jpg' },
+        { name: '辞書100冊', weight: 30, image: '/images/jisyo.jpg' },
         { name: 'ヒトコブラクダ', weight: 600, image: '/images/07._Camel_Profile2C_near_Silverton2C_NSW2C_07.07.2007.jpg' },
         { name: 'ドラフトホース', weight: 1000, image: '/public/images/2c84lbvslhb51.jpg' },
     ]
