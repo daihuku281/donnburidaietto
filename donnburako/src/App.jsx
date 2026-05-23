@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import TitlePage from './TitlePage'
+import WeightPage from './weight'
 import './App.css'
 
 function App() {
@@ -52,9 +53,10 @@ function App() {
     const [kcal, setKcal] = useState('')
     const [randomFood, setRandomFood] = useState(foods[0])
     const [showTitlePage, setShowTitlePage] = useState(true)
-    
     // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
     const [animationKey, setAnimationKey] = useState(0)
+    const [showWeightPage, setShowWeightPage] = useState(false)
+        // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
 
     const changeFood = () => {
         const randomIndex = Math.floor(Math.random() * foods.length)
@@ -74,6 +76,10 @@ function App() {
 
     if (showTitlePage) {
         return <TitlePage onBack={() => setShowTitlePage(false)} />
+    }
+
+    if (showWeightPage) {
+        return <WeightPage onBack={() => setShowWeightPage(false)} />
     }
 
     return (
@@ -96,8 +102,10 @@ function App() {
                 計算する
             </button>
 
+            <button onClick={() => setShowWeightPage(true)}>
+                体重の入力
+            </button>
 
-            
             <button onClick={changeFood}>
                 食べ物を変更
             </button>
