@@ -77,7 +77,6 @@ function App() {
     const unitCount = Math.floor(amount)
     const visibleCount = Math.min(unitCount, 20)
     const moreCount = unitCount - visibleCount
-
     if (showTitlePage) {
         return <TitlePage onBack={() => setShowTitlePage(false)} />
     }
