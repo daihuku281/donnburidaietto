@@ -60,6 +60,8 @@ function App() {
     const [showWeightPage, setShowWeightPage] = useState(false)
     const [showBurnInput, setShowBurnInput] = useState(false)
     const [burnKcal, setBurnKcal] = useState('')
+    const [burnApplied, setBurnApplied] = useState(false)
+    const [imageState, setImageState] = useState('normal')
 
     const changeFood = () => {
         const randomIndex = Math.floor(Math.random() * foods.length)
@@ -71,6 +73,8 @@ function App() {
         const net = Math.max(0, Number(inputValue) - Number(burnKcal || 0))
         setKcal(String(net))
         setAnimationKey(prev => prev + 1)
+        setBurnApplied(burnKcal !== '')
+        setImageState('normal')
     }
     
     const amount = kcal === '' ? 0 : Number(kcal) / randomFood.kcal
@@ -121,9 +125,17 @@ function App() {
                 )}
             </div>
 
-            <button onClick={() => setShowWeightPage(true)}>
-                体重の入力
-            </button>
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <button onClick={() => setShowWeightPage(true)}>
+                    体重の入力
+                </button>
+                {kcal !== '' && (
+                    <>
+                        <button onClick={() => setImageState('sucked')}>吸い込む</button>
+                        <button onClick={() => imageState === 'sucked' && setImageState('spit')}>吐き出す</button>
+                    </>
+                )}
+            </div>
 
             <button onClick={changeFood}>
                 食べ物を変更
@@ -142,16 +154,14 @@ function App() {
                             key={index}
                             src={encodeURI(randomFood.image)}
                             alt={`${randomFood.name} ${index + 1}`}
-                            className="food-image"
-                            /* 【重要】1枚ごとにdelay（時間差）を0.08秒ずつずらして、ポロポロと降らせる */
-                            style={{ animationDelay: `${index * 0.08}s` }}
+                            className={`food-image${imageState === 'sucked' ? ' sucked-in' : imageState === 'spit' ? ' spit-out' : ''}`}
+                            style={{ animationDelay: `${index * 0.05}s` }}
                         />
                     ))}
                     {moreCount > 0 && (
-                        <div 
-                            className="more-count"
-                            /* 画像が全部落ちきったあとに最後の文字を落とす指定 */
-                            style={{ animationDelay: `${visibleCount * 0.08}s` }}
+                        <div
+                            className={`more-count${imageState === 'sucked' ? ' sucked-in' : imageState === 'spit' ? ' spit-out' : ''}`}
+                            style={{ animationDelay: `${visibleCount * 0.05}s` }}
                         >
                             +{moreCount} つ
                         </div>
