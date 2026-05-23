@@ -9,6 +9,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  font-weight: 700;
 }
 
 @keyframes rainbowMove {
