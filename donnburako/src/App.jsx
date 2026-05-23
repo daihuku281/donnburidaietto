@@ -96,6 +96,8 @@ function App() {
                 計算する
             </button>
 
+
+            
             <button onClick={changeFood}>
                 食べ物を変更
             </button>
