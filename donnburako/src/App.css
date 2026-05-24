@@ -302,7 +302,7 @@
 /* 🍔 食べ物画像リストのレイアウト（元の状態を維持） */
 .food-image-list {
   display: grid;
-  grid-template-columns: repeat(13, 80px);
+  grid-template-columns: repeat(11, 80px);
   gap: 0.5rem;
   margin-top: 0.75rem;
   overflow: visible;
