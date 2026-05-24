@@ -73,18 +73,24 @@ function WeightPage({ onBack }) {
     }
 
     // 何も入力されていない時は計算しない
-    if (weight !== '') {
-        // reduceを使って一番近いキャラクターを探す
-        closestFighter = fighters.reduce((closest, fighter) => {
-            const currentDiff = Math.abs(fighter.weight - Number(weight))
-            const closestDiff = Math.abs(closest.weight - Number(weight))
+    if (weight !== '' && !isNaN(Number(weight))) {
 
-            if (currentDiff < closestDiff) {
-                return fighter
-            }
-            return closest
-        })
-    }
+    closestFighter = fighters.reduce((closest, fighter) => {
+
+        const currentDiff =
+            Math.abs(fighter.weight - Number(weight))
+
+        const closestDiff =
+            Math.abs(closest.weight - Number(weight))
+
+        if (currentDiff < closestDiff) {
+            return fighter
+        }
+
+        return closest
+
+    }, fighters[0])
+}
 
     return (
         <div
