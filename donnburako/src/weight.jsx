@@ -22,7 +22,6 @@ function WeightPage({ onBack }) {
         { name: 'ドラフトホース', weight: 1000, image: '/images/2c84lbvslhb51.jpg' },
         { name: 'デデデ大王', weight: 127, image: '/images/dedeking.png'}
     ]
-
     // 一番近いキャラクターを保存する変数
     let closestFighter = null
 
