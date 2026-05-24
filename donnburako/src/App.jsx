@@ -124,10 +124,6 @@ function App() {
         <div className="app-container">
             <h1>カロリー量を入力してください</h1>
 
-            <button onClick={() => { resetCalc(); setShowTitlePage(true) }}>
-                タイトルページへ
-            </button>
-
             <input
                 type="number"
                 min="1"
@@ -157,9 +153,6 @@ function App() {
             </div>
 
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <button onClick={() => { resetCalc(); setShowWeightPage(true) }}>
-                    体重の入力
-                </button>
                 {kcal !== '' && (
                     <>
                         <button onClick={() => setImageState('sucked')}>吸い込む</button>
@@ -180,6 +173,17 @@ function App() {
                     </button>
                 )}
             </div>
+
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <button onClick={() => setShowTitlePage(true)}>
+                タイトルページへ
+            </button>
+    
+            <button onClick={() => setShowWeightPage(true)}>
+                体重の入力に進む！！！
+            </button>
+        </div>
+
 
             <p>
                 入力されたカロリーはだいたい {randomFood.name}{' '}
