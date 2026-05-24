@@ -15,14 +15,13 @@ function WeightPage({ onBack }) {
     const fighters = [
         { name: '太宰治', weight: 67, image: '/images/250px-Osamu_Dazai.jpg' },
         { name: 'ドクターマリオ', weight: 98, image: '/images/800px-E585ACE5BC8FE7B5B5_SP_E38389E382AFE382BFE383BCE3839EE383AAE382AA.png' },
-        { name: 'ドラえもん', weight: 129, image: '/images/doraemon.jpg' },
         { name: 'デビル化カズヤ', weight: 113, image: '/images/7z2QwBPGvjDXNpuj9GeAwRr0PiWI3dcAr9MEBIJJHTL964YEso0yjlCn96FxFobwS38r4opAhPFYm5hw_main.jpg' },
         { name: 'DIO', weight: 90, image: '/images/chara_img_sp2.jpg' },
         { name: '辞書100冊', weight: 30, image: '/images/jisyo.jpg' },
         { name: 'ヒトコブラクダ', weight: 600, image: '/images/07._Camel_Profile2C_near_Silverton2C_NSW2C_07.07.2007.jpg' },
         { name: 'ドラフトホース', weight: 1000, image: '/images/2c84lbvslhb51.jpg' },
+        { name: 'デデデ大王', weight: 127, image: '/images/dedeking.png'}
     ]
-
     // 一番近いキャラクターを保存する変数
     let closestFighter = null
 
