@@ -97,7 +97,7 @@ function App() {
     
     const amount = kcal === '' ? 0 : Number(kcal) / randomFood.kcal
     const unitCount = Math.floor(amount)
-    const visibleCount = Math.min(unitCount, 20)
+    const visibleCount = Math.min(unitCount, 21)
     const moreCount = unitCount - visibleCount
 
     const handleShowDesc = () => {
@@ -234,7 +234,7 @@ function App() {
                     position: 'fixed',
                     top: '50%',
                     left: '50%',
-                    transform: 'translate(6%, -22%)',
+                    transform: 'translate(6%, -12%)',
                     width: '800px',
                     pointerEvents: 'none',
                 }}
