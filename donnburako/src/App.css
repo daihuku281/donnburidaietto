@@ -285,8 +285,8 @@
 
 /* 🍔 食べ物画像リストのレイアウト */
 .food-image-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(13, 80px);
   gap: 0.5rem;
   margin-top: 0.75rem;
   overflow: visible;

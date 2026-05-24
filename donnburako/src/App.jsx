@@ -175,11 +175,11 @@ function App() {
             </div>
 
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <button onClick={() => setShowTitlePage(true)}>
+            <button onClick={() => { resetCalc(); setShowTitlePage(true) }}>
                 タイトルページへ
             </button>
-    
-            <button onClick={() => setShowWeightPage(true)}>
+
+            <button onClick={() => { resetCalc(); setShowWeightPage(true) }}>
                 体重の入力に進む！！！
             </button>
         </div>
