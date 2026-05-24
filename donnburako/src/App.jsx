@@ -228,7 +228,7 @@ function App() {
                     position: 'fixed',
                     top: '50%',
                     left: '50%',
-                    transform: 'translate(6%, -25%)',
+                    transform: 'translate(6%, -22%)',
                     width: '800px',
                     pointerEvents: 'none',
                 }}
