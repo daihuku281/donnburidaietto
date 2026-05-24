@@ -252,7 +252,7 @@ function WeightPage({ onBack }) {
                         </p>
 
                         <p style={{ fontSize: '0.85rem', color: '#777', mairginTop: '0.5rem' }}>
-                            💡 キャラクターをタップすると小話が見れるよ！
+                            💡 アイコンをタップすると小話が見れるよ！
                         </p>
 
                         {/* --- 追加：小話の表示エリア --- */}
