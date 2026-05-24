@@ -1,3 +1,5 @@
+/* --- 既存のスタイルを整理・パワーアップした完全版コード --- */
+
 .title-page {
   padding: 2rem;
   text-align: center;
@@ -79,8 +81,7 @@
     z-index: 1;
     top: 34px;
     height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg) scale(1.4);
   }
 
   .vite {
@@ -88,8 +89,7 @@
     top: 107px;
     height: 26px;
     width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg) scale(0.8);
   }
 }
 
@@ -220,67 +220,56 @@
   }
 }
 
-/* --- 既存の .app-container を以下に置き換えてください --- */
-
+/* 🌈 メイン画面の背景設定（デデデ大王用のはみ出し対策付き） */
 .app-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   align-items: flex-start;
-  padding: 2rem; /* 少し余白を広げてゆったりさせました */
-  min-height: 100vh; /* 画面全体に虹色を広げる設定 */
+  padding: 2rem; 
+  min-height: 100vh; 
   box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden; /* デデデ大王の画像がはみ出しても画面が横に揺れないようにする */
 
-  /* 🌈 虹色のグラデーション設定 */
   background: linear-gradient(
     45deg,
-    #ff7675, /* 赤 */
-    #ffeaa7, /* 黄 */
-    #55efc4, /* 緑 */
-    #81ecec, /* 青 */
-    #74b9ff, /* 藍 */
-    #a29bfe, /* 紫 */
-    #ff7675  /* ループを滑らかにするための赤 */
+    #ff7675, #ffeaa7, #55efc4, #81ecec, #74b9ff, #a29bfe, #ff7675
   );
   background-size: 400% 400%;
-  animation: rainbowAnimation 15s ease infinite; /* 15秒かけて滑らかに動く */
+  animation: rainbowAnimation 15s ease infinite; 
 }
 
-/* 虹色を動かすためのアニメーション */
 @keyframes rainbowAnimation {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* 💡 虹色背景でも文字がはっきり読めるようにする調整 */
 .app-container h1,
 .app-container p {
-  color: #2d3436; /* 濃いグレーの文字 */
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); /* 白い影をつけて文字を浮き立たせる */
+  color: #2d3436; 
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); 
   font-weight: bold;
 }
 
-/* ボタンや入力フォームをポップで今風のデザインに */
 .app-container input[type="number"],
 .app-container button {
   padding: 10px 18px;
   border: none;
-  border-radius: 20px; /* 丸みを持たせる */
+  border-radius: 20px; 
   font-size: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 軽い影をつける */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   cursor: pointer;
   transition: transform 0.1s, background-color 0.2s;
 }
 
-/* 入力フォームの背景を白にして見やすく */
 .app-container input[type="number"] {
   background-color: rgba(255, 255, 255, 0.9);
   outline: none;
   width: 250px;
 }
 
-/* ボタンにマウスを乗せたとき・押したときのちょっとしたエフェクト */
 .app-container button {
   background-color: #ffffff;
   color: #333;
@@ -288,14 +277,13 @@
 }
 .app-container button:hover {
   background-color: #f0f0f0;
-  transform: translateY(-1px); /* ほんの少し浮く */
+  transform: translateY(-1px); 
 }
 .app-container button:active {
-  transform: translateY(1px); /* 押した感を出す */
+  transform: translateY(1px); 
 }
 
-/* --- ここから下の food-image-list などの既存コードはそのままで大丈夫です --- */
-
+/* 🍔 食べ物画像リストのレイアウト */
 .food-image-list {
   display: flex;
   flex-wrap: wrap;
@@ -305,31 +293,54 @@
   padding: 10px 0;
 }
 
+/* 🍎 食べ物画像の設定（クリックしやすさ＆ホバー時の傾きを追加！） */
 .food-image {
   width: 80px;
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid #ccc;
+  cursor: pointer;
+  pointer-events: auto !important; /* 吸い込み中でもクリックできるようにする */
+
   opacity: 0;
   animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
 }
 
+/* 画像にマウスを乗せるとポップに浮き出る */
+.food-image:hover {
+  transform: scale(1.15) rotate(3deg);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+/* ➕ 「+○つ」の枠の設定 */
 .more-count {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 80px;
   height: 80px;
-  background: rgba(255, 255, 255, 0.8); /* 虹色に映えるよう、少し白の半透明に変更しました */
+  background: rgba(255, 255, 255, 0.85); 
   border: 1px dashed #999;
   border-radius: 8px;
   color: #333;
   font-size: 0.9rem;
+  cursor: pointer;
+  pointer-events: auto !important;
+
   opacity: 0;
   animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  transition: transform 0.2s, background-color 0.2s;
 }
 
+.more-count:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+}
+
+/* 💨 吸い込み・吐き出し・落下の動き（キーフレーム） */
 .food-image.sucked-in,
 .more-count.sucked-in {
   opacity: 1;
@@ -358,7 +369,7 @@
     opacity: 0;
   }
   70% {
-    transform: translateY(10px) scale(1.05);
+    transform: translateY(10px) scale(1.05); 
     opacity: 1;
   }
   100% {
@@ -366,60 +377,118 @@
     opacity: 1;
   }
 }
-/* --- 変更・追加したスタイル --- */
 
-.food-image-list {
+/* ✨ 【新機能】クリックされた時に飛び出す説明カード */
+.food-description-card {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.95); 
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 3px solid #ffeaa7; 
+  max-width: 450px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 50; /* デデデ大王の手前に確実に表示する */
+
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cardFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+}
+
+.food-description-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #2d3436;
+  font-size: 1.3rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-  overflow: visible;/* 上から降ってくる際、コンテナ外から綺麗に出現させるため */
-  padding: 10px 0;
-}
-
-.food-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-
-  /* アニメーションの初期設定（最初は透明） */
-  opacity: 0;
-  animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-.more-count {
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 80px;
-  height: 80px;
-  background: #f3f4f6;
-  border: 1px dashed #999;
-  border-radius: 8px;
-  color: #333;
-  font-size: 0.9rem;
-
-  /* テキストの枠も画像と一緒に落とすためのアニメーション設定 */
-  opacity: 0;
-  animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  gap: 0.5rem;
 }
 
-/* 新しく追加：上からバウンドしながら落ちてくるキーフレーム 
-*/
-@keyframes dropFall {
-  0% {
-    transform: translateY(-150px) scale(0.6);
-    opacity: 0;
-  }
-  70% {
-    transform: translateY(10px) scale(1.05); /* 少し行き過ぎてから戻る（バウンド感） */
+.food-description-card p {
+  margin: 0;
+  color: #2d3436;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@keyframes cardFadeIn {
+  to {
     opacity: 1;
+    transform: translateY(0);
   }
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  
+}
+/* ==========================================================================
+   🚨 絶対に最前面に表示する「全画面モーダル」のスタイル
+   ========================================================================== */
+
+.food-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 周りを暗くして目立たせる */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999; /* デデデ大王も他の全ての要素もぶち抜いて一番手前に出す */
+  animation: fadeInEffect 0.2s ease-out forwards;
+}
+
+.food-modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 24px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  border: 4px solid #ffeaa7;
+  text-align: center;
+  box-sizing: border-box;
+  animation: scaleUpEffect 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.food-modal-content h2 {
+  margin: 0;
+  color: #2d3436;
+  font-size: 1.6rem;
+}
+
+.modal-desc-text {
+  color: #636e72 !important;
+  font-weight: normal !important;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 15px 0 25px 0;
+  text-shadow: none !important; /* 背景が白なので文字の影を消してすっきりさせる */
+}
+
+.modal-close-btn {
+  background-color: #ff7675 !important;
+  color: white !important;
+  width: 100%;
+  font-weight: bold;
+  padding: 12px 0;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(255, 118, 117, 0.3);
+}
+
+.modal-close-btn:hover {
+  background-color: #e17055 !important;
+}
+
+@keyframes fadeInEffect {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUpEffect {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* 画像をdivで包んだので、ホバーエフェクトを確実に効かせるための調整 */
+.food-image-list div:hover {
+  z-index: 10;
 }

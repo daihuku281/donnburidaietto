@@ -10,44 +10,49 @@ function App() {
             kcal: 900,
             unit: '杯',
             image: '/images/11f24f5820d0739c31575ef5f36f83e9.png',
+            desc: 'ジューシーなトンカツを甘辛い出汁と卵でふんわりとじた、ボリューム満点のがっつり飯！これ一杯で元気がみなぎります。',
         },
         {
             name: '大福',
             kcal: 250,
             unit: '個',
             image: '/images/Daifuku_1.png',
+            desc: '柔らかいお餅の中に、程よい甘さのあんこがぎっしり。お茶請けにぴったりな、ほっとする伝統の和菓子です。',
         },
         {
             name: '大根',
             kcal: 15,
             unit: '本',
-
             image: '/images/daikonn(1).png',
-
+            desc: '水分たっぷりでとってもヘルシー！煮物やおでんにすると味が染みて絶品、すりおろせばサッパリと万能な冬の定番野菜です。',
         },
         {
             name: 'どんぐり',
             kcal: 10,
             unit: '個',
             image: '/images/large.png',
+            desc: '森のリスたちの大好物。人間が食べるにはアク抜きが大変だけど、ちんまりとしたフォルムが見ているだけで癒やされます。',
         },
         {
             name: 'ダチョウの肉',
             kcal: 140,
             unit: '枚',
             image: '/images/dachou.png',
+            desc: '実はとっても高タンパク・低カロリーでヘルシーなお肉！クセが少なくて柔らかく、ローストやステーキにすると絶品です。',
         },
         {
             name: 'ドラゴンフルーツ',
             kcal: 15,
             unit: '個',
             image: '/images/image80.png',
+            desc: '南国気分を味わえる鮮やかな見た目！さっぱりとした上品な甘さと、キウイに似たプチプチとした種の食感が楽しいフルーツです。',
         },
         {
             name: 'ダニエルが育てた謎の野菜',
             kcal: 2750,
             unit: '束',
             image: '/images/スクリーンショット 2026-05-23 021419.png',
+            desc: 'ダニエルが独自の特殊な農法で育て上げた、驚異の超高カロリー野菜。一口食べれば一週間は動けるという噂の、謎に包まれた逸品。',
         },
     ]
     
@@ -55,7 +60,6 @@ function App() {
     const [kcal, setKcal] = useState('')
     const [randomFood, setRandomFood] = useState(foods[0])
     const [showTitlePage, setShowTitlePage] = useState(true)
-    // 【新機能】ボタンを押すたびにアニメーションを強制リセットさせるための識別用スタンプ
     const [animationKey, setAnimationKey] = useState(0)
     const [showWeightPage, setShowWeightPage] = useState(false)
     const [showBurnInput, setShowBurnInput] = useState(false)
@@ -63,10 +67,14 @@ function App() {
     const [burnApplied, setBurnApplied] = useState(false)
     const [imageState, setImageState] = useState('normal')
 
+    // クリックされた食べ物の詳細を表示するためのState
+    const [selectedFoodDesc, setSelectedFoodDesc] = useState(null)
+
     const changeFood = () => {
         const randomIndex = Math.floor(Math.random() * foods.length)
         setRandomFood(foods[randomIndex])
-        setKcal('') // 食べ物を変えたら一旦クリア
+        setKcal('') 
+        setSelectedFoodDesc(null) 
     }
 
     const handleCalculate = () => {
@@ -75,12 +83,25 @@ function App() {
         setAnimationKey(prev => prev + 1)
         setBurnApplied(burnKcal !== '')
         setImageState('normal')
+        setSelectedFoodDesc(null) 
     }
     
     const amount = kcal === '' ? 0 : Number(kcal) / randomFood.kcal
     const unitCount = Math.floor(amount)
     const visibleCount = Math.min(unitCount, 20)
     const moreCount = unitCount - visibleCount
+
+    // 【超強化】クリックされたらアラートを出しつつ確実にモーダルを起動する関数
+    const handleShowDesc = () => {
+        console.log("クリックされました！:", randomFood.name); // 開発者ツール用
+        setSelectedFoodDesc({
+            name: randomFood.name,
+            kcal: randomFood.kcal,
+            unit: randomFood.unit,
+            desc: randomFood.desc
+        })
+    }
+
     if (showTitlePage) {
         return <TitlePage onBack={() => setShowTitlePage(false)} />
     }
@@ -137,9 +158,18 @@ function App() {
                 )}
             </div>
 
-            <button onClick={changeFood}>
-                食べ物を変更
-            </button>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button onClick={changeFood}>
+                    食べ物を変更
+                </button>
+                
+                {/* 🚨 【最終手段】画像クリックがどうしても動かない時用の「直接ボタン」 */}
+                {unitCount > 0 && (
+                    <button onClick={handleShowDesc} style={{ backgroundColor: '#ffda79', color: '#333' }}>
+                        🔍 {randomFood.name} の解説を直接見る
+                    </button>
+                )}
+            </div>
 
             <p>
                 入力されたカロリーは {randomFood.name}{' '}
@@ -147,21 +177,26 @@ function App() {
             </p>
 
             {unitCount > 0 && (
-                /* ここに animationKey を渡すことで、計算ボタンを押すたびに中の要素ごと初期化・再描画されて確実に降ってきます */
                 <div className="food-image-list" key={animationKey}>
                     {Array.from({ length: visibleCount }, (_, index) => (
-                        <img
-                            key={index}
-                            src={encodeURI(randomFood.image)}
-                            alt={`${randomFood.name} ${index + 1}`}
-                            className={`food-image${imageState === 'sucked' ? ' sucked-in' : imageState === 'spit' ? ' spit-out' : ''}`}
-                            style={{ animationDelay: `${index * 0.05}s` }}
-                        />
+                        <div 
+                            key={index} 
+                            onClick={handleShowDesc} 
+                            style={{ display: 'inline-block', cursor: 'pointer' }}
+                        >
+                            <img
+                                src={encodeURI(randomFood.image)}
+                                alt={`${randomFood.name} ${index + 1}`}
+                                className={`food-image${imageState === 'sucked' ? ' sucked-in' : imageState === 'spit' ? ' spit-out' : ''}`}
+                                style={{ animationDelay: `${index * 0.05}s` }}
+                            />
+                        </div>
                     ))}
                     {moreCount > 0 && (
                         <div
                             className={`more-count${imageState === 'sucked' ? ' sucked-in' : imageState === 'spit' ? ' spit-out' : ''}`}
                             style={{ animationDelay: `${visibleCount * 0.05}s` }}
+                            onClick={handleShowDesc}
                         >
                             +{moreCount} つ
                         </div>
@@ -169,8 +204,25 @@ function App() {
                 </div>
             )}
 
+            {/* 👑 【最前面モーダル】クリックされたら画面全体を覆うポップアップを表示 */}
+            {selectedFoodDesc && (
+                <div className="food-modal-overlay" onClick={() => setSelectedFoodDesc(null)}>
+                    <div className="food-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2>{selectedFoodDesc.name} のヒミツ 🤫</h2>
+                        <hr style={{ border: '1px solid #ffeaa7', margin: '10px 0' }} />
+                        <p style={{ fontSize: '1.2rem', marginBottom: '10px' }}>
+                            1{selectedFoodDesc.unit} あたり <strong>{selectedFoodDesc.kcal} kcal</strong>
+                        </p>
+                        <p className="modal-desc-text">{selectedFoodDesc.desc}</p>
+                        <button className="modal-close-btn" onClick={() => setSelectedFoodDesc(null)}>
+                            閉じる
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <img
-                src={encodeURI('/images/スクリーンショット 2026-05-23 20.38.20.png')}
+                src="/images/スクリーンショット 2026-05-23 20.38.20.png"
                 alt="decoration"
                 style={{
                     position: 'fixed',
