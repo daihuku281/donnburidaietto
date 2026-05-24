@@ -11,16 +11,19 @@ function WeightPage({ onBack }) {
     // フェードイン用
     const [fadeIn, setFadeIn] = useState(false)
 
-    // キャラクターの重量データに image プロパティを追加
+    // --- 追加：選択された小話のテキストを管理するstate ---
+    const [selectedStory, setSelectedStory] = useState('')
+
+    // キャラクターの重量データに image と story（小話）プロパティを追加
     const fighters = [
-        { name: '太宰治', weight: 67, image: '/images/250px-Osamu_Dazai.jpg' },
-        { name: 'ドクターマリオ', weight: 98, image: '/images/800px-E585ACE5BC8FE7B5B5_SP_E38389E382AFE382BFE383BCE3839EE383AAE382AA.png' },
-        { name: 'デビル化カズヤ', weight: 113, image: '/images/7z2QwBPGvjDXNpuj9GeAwRr0PiWI3dcAr9MEBIJJHTL964YEso0yjlCn96FxFobwS38r4opAhPFYm5hw_main.jpg' },
-        { name: 'DIO', weight: 90, image: '/images/chara_img_sp2.jpg' },
-        { name: '辞書100冊', weight: 30, image: '/images/jisyo.jpg' },
-        { name: 'ヒトコブラクダ', weight: 600, image: '/images/07._Camel_Profile2C_near_Silverton2C_NSW2C_07.07.2007.jpg' },
-        { name: 'ドラフトホース', weight: 1000, image: '/images/2c84lbvslhb51.jpg' },
-        { name: 'デデデ大王', weight: 127, image: '/images/dedeking.png'}
+        { name: '太宰治', weight: 67, image: '/images/250px-Osamu_Dazai.jpg', story: '日本の小説家。代表作に「人間失格」や「走れメロス」がある。身長は当時としては高めの175cmほどあったと言われています。' },
+        { name: 'ドクターマリオ', weight: 98, image: '/images/800px-E585ACE5BC8FE7B5B5_SP_E38389E382AFE382BFE383BCE3839EE383AAE382AA.png', story: '白衣をまとったマリオ。スマブラ界の「重量級」に片足を突っ込んでいる。カプセルを投げまくる頼れる（？）お医者さん。' },
+        { name: 'デビル化カズヤ', weight: 113, image: '/images/7z2QwBPGvjDXNpuj9GeAwRr0PiWI3dcAr9MEBIJJHTL964YEso0yjlCn96FxFobwS38r4opAhPFYm5hw_main.jpg', story: 'デビル因子によって変貌した三島一八の姿。スマブラでも超重量級として、圧倒的な攻撃力とビームで相手を圧倒します。' },
+        { name: 'DIO', weight: 90, image: '/images/chara_img_sp2.jpg', story: 'ジョジョの奇妙な冒険に登場する最高にハイな吸血鬼。スタンド「ザ・ワールド」で時を止める。実は身長195cmで、筋肉の塊のわりには引き締まった体重。' },
+        { name: '辞書100冊', weight: 30, image: '/images/jisyo.jpg', story: '一般的な広辞苑クラスの厚い辞書は1冊あたり約3kg。100冊集まると300kgになりそうですが、ここでは少し軽めの辞書100冊分の想定です。' },
+        { name: 'ヒトコブラクダ', weight: 600, image: '/images/07._Camel_Profile2C_near_Silverton2C_NSW2C_07.07.2007.jpg', story: '砂漠の過酷な環境に耐えるため、背中のコブに脂肪を蓄えている。このコブだけでもかなりの重量があります。' },
+        { name: 'ドラフトホース', weight: 1000, image: '/images/2c84lbvslhb51.jpg', story: '「ばん馬」などで知られる超大型の馬。重いソリを引くための強靭な筋肉を持っており、体重はなんと1トンに達します。' },
+        { name: 'デデデ大王', weight: 127, image: '/images/dedeking.png', story: 'プププランドの自称大王。スマブラでもトップクラスの重量級ファイター。あの巨大なハンマーを軽々と振り回すパワーの持ち主。' }
     ]
     // 一番近いキャラクターを保存する変数
     let closestFighter = null
@@ -33,23 +36,38 @@ function WeightPage({ onBack }) {
         // 最初は透明
         setFadeIn(false)
 
+        // 小話をリセット
+        setSelectedStory('')
+
         // 少し後に濃くする
         setTimeout(() => {
             setFadeIn(true)
         }, 50)
     }
 
-    // --- 追加：入力欄が変更された時の処理 ---
+    // --- 入力欄が変更された時の処理 ---
     const handleInputChange = (e) => {
         // 入力された値をstateに保存
         setWeight(e.target.value)
         
         // 体重が変わったら、一度結果画面を非表示にする
-        // これにより、決定を押す前にフライングで結果が切り替わるのを防ぎます
         setShowResult(false)
         
         // フェードインのフラグも初期状態（透明）に戻す
         setFadeIn(false)
+
+        // 小話もリセット
+        setSelectedStory('')
+    }
+
+    // --- 追加：キャラクターがクリックされた時の処理 ---
+    const handleCharacterClick = (storyText) => {
+        // すでに同じ小話が表示されている場合は閉じ、そうでない場合は表示する（トグル処理）
+        if (selectedStory === storyText) {
+            setSelectedStory('')
+        } else {
+            setSelectedStory(storyText)
+        }
     }
 
     // 何も入力されていない時は計算しない
@@ -114,7 +132,6 @@ function WeightPage({ onBack }) {
                     min="0"
                     placeholder="体重 (kg)"
                     value={weight}
-                    // --- 変更：新しく作った handleInputChange を呼ぶように修正 ---
                     onChange={handleInputChange}
                     style={{
                         padding: '1rem',
@@ -176,40 +193,88 @@ function WeightPage({ onBack }) {
                             あなたの体重はだいたい
                         </p>
 
-                        {/* --- 画像表示エリア --- */}
-                        <div style={{ margin: '1.5rem 0' }}>
-                            <img 
-                                src={closestFighter.image} 
-                                alt={closestFighter.name}
-                                style={{
-                                    width: '150px',
-                                    height: '150px',
-                                    objectFit: 'cover', // 画像を正方形にトリミング
-                                    borderRadius: '50%', // 丸くする
-                                    border: '4px solid #ff9800', // オレンジの枠線
-                                    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                                    backgroundColor: 'white'
-                                }}
-                                // 画像が見つからない場合のフォールバック（エラー対策）
-                                onError={(e) => {
-                                    e.target.src = 'https://placehold.jp/150x150.png?text=No+Image';
-                                }}
-                            />
-                        </div>
-
-                        <h2
+                        {/* --- 変更：クリックできるエリア（ボタン要素）にする --- */}
+                        <button
+                            onClick={() => handleCharacterClick(closestFighter.story)}
+                            title="クリックして小話を読む"
                             style={{
-                                fontSize: '2rem',
-                                color: '#ff5722',
-                                margin: '0.5rem 0'
+                                background: 'none',
+                                border: 'none',
+                                padding: 0,
+                                cursor: 'pointer',
+                                outline: 'none',
+                                width: '100%',
+                                display: 'block',
+                                margin: '1.5rem 0'
                             }}
                         >
-                            {closestFighter.name}
-                        </h2>
+                            {/* 画像表示エリア */}
+                            <div style={{ margin: '0 auto', width: '150px' }}>
+                                <img 
+                                    src={closestFighter.image} 
+                                    alt={closestFighter.name}
+                                    style={{
+                                        width: '150px',
+                                        height: '150px',
+                                        objectFit: 'cover',
+                                        borderRadius: '50%',
+                                        border: '4px solid #ff9800',
+                                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                                        backgroundColor: 'white',
+                                        transition: 'transform 0.2s'
+                                    }}
+                                    // マウスホップ時のエフェクト用（お好みで）
+                                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1.0)'}
+                                    onError={(e) => {
+                                        e.target.src = 'https://placehold.jp/150x150.png?text=No+Image';
+                                    }}
+                                />
+                            </div>
+
+                            <h2
+                                style={{
+                                    fontSize: '2rem',
+                                    color: '#ff5722',
+                                    margin: '0.5rem 0',
+                                    textDecoration: 'underline',
+                                    textDecorationStyle: 'dotted'
+                                }}
+                            >
+                                {closestFighter.name}
+                            </h2>
+                        </button>
 
                         <p style={{ fontSize: '1.1rem', color: '#444' }}>
                             （重量 {closestFighter.weight} kg）
                         </p>
+
+                        <p style={{ fontSize: '0.85rem', color: '#777', mairginTop: '0.5rem' }}>
+                            💡 キャラクターをタップすると小話が見れるよ！
+                        </p>
+
+                        {/* --- 追加：小話の表示エリア --- */}
+                        {selectedStory && (
+                            <div
+                                style={{
+                                    marginTop: '1.5rem',
+                                    padding: '1rem',
+                                    background: 'white',
+                                    borderRadius: '12px',
+                                    borderLeft: '5px solid #ff9800',
+                                    textAlign: 'left',
+                                    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)',
+                                    animation: 'fadeIn 0.3s ease-out'
+                                }}
+                            >
+                                <strong style={{ color: '#ff9800', display: 'block', marginBottom: '0.5rem' }}>
+                                    豆知識・小話:
+                                </strong>
+                                <p style={{ fontSize: '0.95rem', color: '#333', margin: 0, lineHeight: '1.5' }}>
+                                    {selectedStory}
+                                </p>
+                            </div>
+                        )}
 
                     </div>
                 )}
