@@ -172,7 +172,7 @@ function App() {
             <img
                 src={encodeURI('/images/スクリーンショット 2026-05-23 20.38.20.png')}
                 alt="decoration"
-                style={{ position: 'fixed', bottom: '4rem', right: '-8rem', width: '700px' }}
+                style={{ position: 'fixed', bottom: '4rem', right: '-8rem', width: '800px' }}
             />
         </div>
     )
