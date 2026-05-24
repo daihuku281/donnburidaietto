@@ -77,6 +77,16 @@ function App() {
         setSelectedFoodDesc(null) 
     }
 
+    const resetCalc = () => {
+        setInputValue('')
+        setKcal('')
+        setBurnKcal('')
+        setShowBurnInput(false)
+        setBurnApplied(false)
+        setImageState('normal')
+        setSelectedFoodDesc(null)
+    }
+
     const handleCalculate = () => {
         const net = Math.max(0, Number(inputValue) - Number(burnKcal || 0))
         setKcal(String(net))
@@ -114,7 +124,7 @@ function App() {
         <div className="app-container">
             <h1>カロリー量を入力してください</h1>
 
-            <button onClick={() => setShowTitlePage(true)}>
+            <button onClick={() => { resetCalc(); setShowTitlePage(true) }}>
                 タイトルページへ
             </button>
 
@@ -147,7 +157,7 @@ function App() {
             </div>
 
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <button onClick={() => setShowWeightPage(true)}>
+                <button onClick={() => { resetCalc(); setShowWeightPage(true) }}>
                     体重の入力
                 </button>
                 {kcal !== '' && (
