@@ -172,8 +172,8 @@ function App() {
             </div>
 
             <p>
-                入力されたカロリーは {randomFood.name}{' '}
-                {amount === 0 ? 0 : amount.toFixed(2)} {randomFood.unit} です
+                入力されたカロリーはだいたい {randomFood.name}{' '}
+                {amount === 0 ? 0 : Math.round(amount)} {randomFood.unit} です
             </p>
 
             {unitCount > 0 && (
