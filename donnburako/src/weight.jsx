@@ -23,7 +23,9 @@ function WeightPage({ onBack }) {
         { name: '辞書100冊', weight: 30, image: '/images/jisyo.jpg', story: '一般的な広辞苑クラスの厚い辞書は1冊あたり約3kg。100冊集まると300kgになりそうですが、ここでは少し軽めの辞書100冊分の想定です。' },
         { name: 'ヒトコブラクダ', weight: 600, image: '/images/07._Camel_Profile2C_near_Silverton2C_NSW2C_07.07.2007.jpg', story: '砂漠の過酷な環境に耐えるため、背中のコブに脂肪を蓄えている。このコブだけでもかなりの重量があります。' },
         { name: 'ドラフトホース', weight: 1000, image: '/images/2c84lbvslhb51.jpg', story: '「ばん馬」などで知られる超大型の馬。重いソリを引くための強靭な筋肉を持っており、体重はなんと1トンに達します。' },
-        { name: 'デデデ大王', weight: 127, image: '/images/dedeking.png', story: 'プププランドの自称大王。スマブラでもトップクラスの重量級ファイター。あの巨大なハンマーを軽々と振り回すパワーの持ち主。' }
+        { name: 'デデデ大王', weight: 127, image: '/images/dedeking.png', story: 'プププランドの自称大王。スマブラでもトップクラスの重量級ファイター。あの巨大なハンマーを軽々と振り回すパワーの持ち主。' },
+        { name: 'ウルトラマンダイナ', weight: 45000000, image: '/images/dyna_kv_1.jpg', story: 'ウルトラマンの額にあるランプは「ビームランプ」など攻撃用が多いですが、ダイナの額のクリスタル（ダイナクリスタル）はタイプチェンジ専用の器官です。ここにエネルギーを集中させることで、姿を瞬時に変えています。' },
+        { name: '土星', weight: 570000000000000000000000000, image: '/images/saturn02_2_satall_s.jpg', story: '太陽系の第六惑星。主に水素とヘリウムで構成されたガス巨星。質量は地球の95倍以上あり、非常に大きな重力を持つ。' }
     ]
     // 一番近いキャラクターを保存する変数
     let closestFighter = null
@@ -250,7 +252,7 @@ function WeightPage({ onBack }) {
                         </p>
 
                         <p style={{ fontSize: '0.85rem', color: '#777', mairginTop: '0.5rem' }}>
-                            💡 キャラクターをタップすると小話が見れるよ！
+                            💡 アイコンをタップすると小話が見れるよ！
                         </p>
 
                         {/* --- 追加：小話の表示エリア --- */}
