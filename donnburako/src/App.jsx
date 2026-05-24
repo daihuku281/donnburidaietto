@@ -148,7 +148,7 @@ function App() {
 
             {unitCount > 0 && (
                 /* ここに animationKey を渡すことで、計算ボタンを押すたびに中の要素ごと初期化・再描画されて確実に降ってきます */
-                <div className="food-image-list" key={animationKey} style={{ position: 'relative' }}>
+                <div className="food-image-list" key={animationKey}>
                     {Array.from({ length: visibleCount }, (_, index) => (
                         <img
                             key={index}
@@ -166,20 +166,21 @@ function App() {
                             +{moreCount} つ
                         </div>
                     )}
-                    <img
-                        src={encodeURI('/images/スクリーンショット 2026-05-23 20.38.20.png')}
-                        alt="decoration"
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(6%, -50%)',
-                            width: '800px',
-                            pointerEvents: 'none',
-                        }}
-                    />
                 </div>
             )}
+
+            <img
+                src={encodeURI('/images/スクリーンショット 2026-05-23 20.38.20.png')}
+                alt="decoration"
+                style={{
+                    position: 'fixed',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(6%, -25%)',
+                    width: '800px',
+                    pointerEvents: 'none',
+                }}
+            />
         </div>
     )
 }
