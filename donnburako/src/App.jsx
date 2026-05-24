@@ -67,7 +67,6 @@ function App() {
     const [burnApplied, setBurnApplied] = useState(false)
     const [imageState, setImageState] = useState('normal')
 
-    // クリックされた食べ物の詳細を表示するためのState
     const [selectedFoodDesc, setSelectedFoodDesc] = useState(null)
 
     const changeFood = () => {
@@ -101,9 +100,7 @@ function App() {
     const visibleCount = Math.min(unitCount, 20)
     const moreCount = unitCount - visibleCount
 
-    // 【超強化】クリックされたらアラートを出しつつ確実にモーダルを起動する関数
     const handleShowDesc = () => {
-        console.log("クリックされました！:", randomFood.name); // 開発者ツール用
         setSelectedFoodDesc({
             name: randomFood.name,
             kcal: randomFood.kcal,
@@ -130,16 +127,14 @@ function App() {
                 placeholder="カロリーを入力してください"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                className="main-input"
             />
 
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <button onClick={handleCalculate}>
-                    計算する
-                </button>
+            {/* 1行目: 計算・消費カロリー入力 */}
+            <div className="button-group">
+                <button onClick={handleCalculate}>計算する</button>
                 {kcal !== '' && !showBurnInput && (
-                    <button onClick={() => setShowBurnInput(true)}>
-                        消費カロリーを入力
-                    </button>
+                    <button onClick={() => setShowBurnInput(true)}>消費カロリーを入力</button>
                 )}
                 {showBurnInput && (
                     <input
@@ -148,11 +143,13 @@ function App() {
                         placeholder="消費カロリー"
                         value={burnKcal}
                         onChange={(e) => setBurnKcal(e.target.value)}
+                        className="burn-input"
                     />
                 )}
             </div>
 
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            {/* 2行目: 吸い込む・吐き出す */}
+            <div className="button-group">
                 {kcal !== '' && (
                     <>
                         <button onClick={() => setImageState('sucked')}>吸い込む</button>
@@ -161,12 +158,9 @@ function App() {
                 )}
             </div>
 
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button onClick={changeFood}>
-                    食べ物を変更
-                </button>
-                
-                {/* 🚨 【最終手段】画像クリックがどうしても動かない時用の「直接ボタン」 */}
+            {/* 3行目: 食べ物変更・直接解説ボタン */}
+            <div className="button-group">
+                <button onClick={changeFood}>食べ物を変更</button>
                 {unitCount > 0 && (
                     <button onClick={handleShowDesc} style={{ backgroundColor: '#ffda79', color: '#333' }}>
                         🔍 {randomFood.name} の解説を直接見る
@@ -174,18 +168,17 @@ function App() {
                 )}
             </div>
 
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <button onClick={() => { resetCalc(); setShowTitlePage(true) }}>
-                タイトルページへ
-            </button>
+            {/* 4行目: ページ移動系 */}
+            <div className="button-group">
+                <button onClick={() => { resetCalc(); setShowTitlePage(true) }}>
+                    タイトルページへ
+                </button>
+                <button onClick={() => { resetCalc(); setShowWeightPage(true) }}>
+                    体重の入力に進む！！！
+                </button>
+            </div>
 
-            <button onClick={() => { resetCalc(); setShowWeightPage(true) }}>
-                体重の入力に進む！！！
-            </button>
-        </div>
-
-
-            <p>
+            <p className="result-text">
                 入力されたカロリーはだいたい {randomFood.name}{' '}
                 {amount === 0 ? 0 : Math.round(amount)} {randomFood.unit} です
             </p>
@@ -218,7 +211,6 @@ function App() {
                 </div>
             )}
 
-            {/* 👑 【最前面モーダル】クリックされたら画面全体を覆うポップアップを表示 */}
             {selectedFoodDesc && (
                 <div className="food-modal-overlay" onClick={() => setSelectedFoodDesc(null)}>
                     <div className="food-modal-content" onClick={(e) => e.stopPropagation()}>
