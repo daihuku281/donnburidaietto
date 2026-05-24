@@ -225,12 +225,14 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  align-items: flex-start;
+  align-items: center;       /* 👈 全体を真ん中寄せに */
+  justify-content: center;   /* 👈 上下もバランスよく中央配置 */
+  text-align: center;        /* 👈 文字も中央揃えに */
   padding: 2rem; 
   min-height: 100vh; 
   box-sizing: border-box;
   position: relative;
-  overflow-x: hidden; /* デデデ大王の画像がはみ出しても画面が横に揺れないようにする */
+  overflow-x: hidden; 
 
   background: linear-gradient(
     45deg,
@@ -264,10 +266,13 @@
   transition: transform 0.1s, background-color 0.2s;
 }
 
-.app-container input[type="number"] {
+/* フォーム入力欄を綺麗に真ん主に置く */
+.main-input,
+.burn-input {
   background-color: rgba(255, 255, 255, 0.9);
   outline: none;
   width: 250px;
+  text-align: center;        /* 👈 入力する数字も真ん中に寄せる */
 }
 
 .app-container button {
@@ -283,7 +288,18 @@
   transform: translateY(1px); 
 }
 
-/* 🍔 食べ物画像リストのレイアウト */
+/* ➕ ボタンを横並びかつ中央にまとめるグループ枠 */
+.button-group {
+  display: flex;
+  justify-content: center;   /* ボタン同士を真ん中に寄せる */
+  align-items: center;
+  gap: 0.75rem;              /* ボタンとボタンの間の隙間 */
+  width: 100%;
+  max-width: 500px;          /* 広がりすぎないように制限 */
+  flex-wrap: wrap;           /* 画面が狭いときは自動で折り返す */
+}
+
+/* 🍔 食べ物画像リストのレイアウト（元の状態を維持） */
 .food-image-list {
   display: grid;
   grid-template-columns: repeat(13, 80px);
@@ -293,7 +309,7 @@
   padding: 10px 0;
 }
 
-/* 🍎 食べ物画像の設定（クリックしやすさ＆ホバー時の傾きを追加！） */
+/* 🍎 食べ物画像の設定 */
 .food-image {
   width: 80px;
   height: 80px;
@@ -301,14 +317,13 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   cursor: pointer;
-  pointer-events: auto !important; /* 吸い込み中でもクリックできるようにする */
+  pointer-events: auto !important;
 
   opacity: 0;
   animation: dropFall 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
 }
 
-/* 画像にマウスを乗せるとポップに浮き出る */
 .food-image:hover {
   transform: scale(1.15) rotate(3deg);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -340,7 +355,7 @@
   transform: scale(1.05);
 }
 
-/* 💨 吸い込み・吐き出し・落下の動き（キーフレーム） */
+/* 💨 吸い込み・吐き出し・落下の動き */
 .food-image.sucked-in,
 .more-count.sucked-in {
   opacity: 1;
@@ -378,7 +393,7 @@
   }
 }
 
-/* ✨ 【新機能】クリックされた時に飛び出す説明カード */
+/* ✨ クリックされた時に飛び出す説明カード */
 .food-description-card {
   margin-top: 1.5rem;
   padding: 1.5rem;
@@ -389,7 +404,7 @@
   max-width: 450px;
   width: 100%;
   box-sizing: border-box;
-  z-index: 50; /* デデデ大王の手前に確実に表示する */
+  z-index: 50;
 
   opacity: 0;
   transform: translateY(20px);
@@ -418,21 +433,19 @@
     transform: translateY(0);
   }
 }
-/* ==========================================================================
-   🚨 絶対に最前面に表示する「全画面モーダル」のスタイル
-   ========================================================================== */
 
+/* 🚨 絶対に最前面に表示する「全画面モーダル」のスタイル */
 .food-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* 周りを暗くして目立たせる */
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99999; /* デデデ大王も他の全ての要素もぶち抜いて一番手前に出す */
+  z-index: 99999; 
   animation: fadeInEffect 0.2s ease-out forwards;
 }
 
@@ -461,7 +474,7 @@
   font-size: 1.05rem;
   line-height: 1.6;
   margin: 15px 0 25px 0;
-  text-shadow: none !important; /* 背景が白なので文字の影を消してすっきりさせる */
+  text-shadow: none !important; 
 }
 
 .modal-close-btn {
@@ -488,7 +501,6 @@
   to { transform: scale(1); opacity: 1; }
 }
 
-/* 画像をdivで包んだので、ホバーエフェクトを確実に効かせるための調整 */
 .food-image-list div:hover {
   z-index: 10;
 }
